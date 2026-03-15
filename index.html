@@ -186,6 +186,20 @@
             align-items: center;
             margin-bottom: 8px;
         }
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 8px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background-color 0.2s;
+            margin-left: 10px;
+        }
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
         .entry-scope {
             background-color: #4682B4;
             color: white;
@@ -225,7 +239,7 @@
             color: #2F4F4F;
         }
         .filter-btn.active {
-            background-color: #8e0303;
+            background-color: #d4a30d;
             color: white;
             font-weight: bold;
         }
@@ -300,6 +314,8 @@
 
 
     <script>
+        var server = 'https://tom-rose.de:9002';
+        //server = 'http://localhost:9002';
         function setPresetMessage(message) {
             document.getElementById('message').value = message;
         }
@@ -341,7 +357,7 @@
             entriesContainer.innerHTML = '<p style="text-align: center; color: #666; font-style: italic;">Lade Einträge...</p>';
             
             try {
-                const response = await fetch('https://tom-rose.de:9002/list');
+                const response = await fetch(`${server}/list`);
                 const data = await response.json();
                 
                 if (response.ok && Array.isArray(data)) {
@@ -380,7 +396,10 @@
                     <div class="entry-item">
                         <div class="entry-header">
                             <span class="entry-scope">${entry.scope}</span>
-                            <span class="entry-timestamp">${formattedDate}</span>
+                            <div style="display: flex; align-items: center;">
+                                <span class="entry-timestamp">${formattedDate}</span>
+                                <button class="delete-btn" onclick="deleteEntry(${entry.id})" title="Eintrag löschen">🗑️</button>
+                            </div>
                         </div>
                         <div class="entry-message">${entry.message}</div>
                     </div>
@@ -388,6 +407,33 @@
             }).join('');
             
             entriesContainer.innerHTML = entriesHTML;
+        }
+        
+        // Delete entry function
+        async function deleteEntry(id) {
+            if (!confirm('Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${server}/delete`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ id: id })
+                });
+                
+                if (response.ok) {
+                    showResult('Eintrag erfolgreich gelöscht', 'success');
+                    loadEntries(); // Refresh the entries list
+                } else {
+                    const data = await response.json();
+                    showResult(`Fehler beim Löschen: ${data.error}`, 'error');
+                }
+            } catch (error) {
+                showResult(`Netzwerkfehler: ${error.message}`, 'error');
+            }
         }
         
         document.getElementById('logForm').addEventListener('submit', async function(e) {
@@ -411,7 +457,7 @@
             showResult('Sending data...', 'loading');
             
             try {
-                const response = await fetch('https://tom-rose.de:9002/post', {
+                const response = await fetch(`${server}/post`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

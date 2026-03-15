@@ -40,6 +40,7 @@ func main() {
 	http.HandleFunc("/", handleHome)
 	http.HandleFunc("/post", handlePost)
 	http.HandleFunc("/list", handleList)
+	http.HandleFunc("/delete", handleDelete)
 
 	// Start HTTP server for local development
 	fmt.Println("Herdbook API server starting on :9002 (HTTPS)...")
@@ -106,6 +107,61 @@ func handlePost(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(ValueRequest{Scope: req.Scope, Message: req.Message})
+}
+
+func handleDelete(w http.ResponseWriter, r *http.Request) {
+	// Enable CORS
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Set("Content-Type", "application/json")
+
+	// Handle preflight OPTIONS request
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
+
+	if r.Method != "POST" {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		json.NewEncoder(w).Encode(ErrorResponse{
+			Error: "Method not allowed. Use POST to delete a value.",
+		})
+		return
+	}
+
+	var delReq struct {
+		Id int `json:"id"`
+	}
+	err := json.NewDecoder(r.Body).Decode(&delReq)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(ErrorResponse{
+			Error: "Invalid JSON format",
+		})
+		return
+	}
+
+	db, err := sql.Open("sqlite3", "herdbook.db")
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(ErrorResponse{Error: "Database error"})
+		return
+	}
+	defer db.Close()
+
+	_, err = db.Exec("DELETE FROM entries WHERE id = ?", delReq.Id)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(ErrorResponse{Error: "Failed to delete message"})
+		log.Println("Failed to delete message:", err)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(struct {
+		Id int `json:"id"`
+	}{Id: delReq.Id})
 }
 
 func handleList(w http.ResponseWriter, r *http.Request) {
