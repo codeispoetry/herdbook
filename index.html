@@ -140,6 +140,28 @@
         select {
             box-shadow: 0 1px 4px rgba(70,130,180,0.08);
         }
+        
+        /* Preset button styling */
+        .preset-btn {
+            background-color: #87CEEB;
+            color: #2F4F4F;
+            padding: 8px 12px;
+            border: 1px solid #4682B4;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            width: auto;
+            flex: 1;
+            min-width: 120px;
+            transition: all 0.2s;
+        }
+        .preset-btn:hover {
+            background-color: #4682B4;
+            color: white;
+        }
+        .preset-btn:active {
+            transform: scale(0.98);
+        }
     </style>
 </head>
 <body>
@@ -160,6 +182,14 @@
                 </select>
                 <label for="message">Eintrag:</label>
                 <input type="text" id="message" name="message" placeholder="Enter your message">
+                
+                <div style="margin-top: 10px; margin-bottom: 15px;">
+                    <label style="margin-bottom: 8px;">Schnelleintrag:</label>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button type="button" class="preset-btn" onclick="setPresetMessage('Klauenschnitt')">Klauenschnitt</button>
+                        <button type="button" class="preset-btn" onclick="setPresetMessage('Umweidung auf ')">Umweidung auf</button>
+                    </div>
+                </div>
             </div>
             
             
@@ -171,6 +201,10 @@
 
 
     <script>
+        function setPresetMessage(message) {
+            document.getElementById('message').value = message;
+        }
+        
         document.getElementById('logForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -192,7 +226,7 @@
             showResult('Sending data...', 'loading');
             
             try {
-                const response = await fetch('https://localhost:9001/post', {
+                const response = await fetch('https://localhost:9002/post', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -218,7 +252,7 @@
             } finally {
                 // Reset button
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Submit Health Data';
+                submitBtn.textContent = 'Submit';
             }
         });
         

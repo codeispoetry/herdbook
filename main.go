@@ -42,9 +42,9 @@ func main() {
 	http.HandleFunc("/list", handleList)
 
 	// Start HTTPS server
-	fmt.Println("Herdbook API server starting on :9001 (HTTPS)...")
+	fmt.Println("Herdbook API server starting on :9002 (HTTPS)...")
 	fmt.Println("Open https://tom-rose.de/herdbook/ in your browser")
-	log.Fatal(http.ListenAndServeTLS(":9001", "server.crt", "server.key", nil))
+	log.Fatal(http.ListenAndServeTLS(":9002", "server.crt", "server.key", nil))
 }
 
 func handleHome(w http.ResponseWriter, r *http.Request) {
@@ -130,69 +130,38 @@ func handleList(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
-	rows, err := db.Query("SELECT timestamp, weight FROM weights ORDER BY timestamp DESC")
+	rows, err := db.Query("SELECT * FROM entries ORDER BY timestamp DESC")
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		json.NewEncoder(w).Encode(ErrorResponse{Error: "Failed to query weights"})
+		json.NewEncoder(w).Encode(ErrorResponse{Error: "Failed to query entries"})
+		fmt.Println("Failed to query entries:", err)
 		return
 	}
 	defer rows.Close()
 
-	type WeightEntry struct {
+	type Entry struct {
+		Id        int     `json:"id"`
 		Timestamp string  `json:"timestamp"`
-		Weight    float32 `json:"weight"`
+		Category  string  `json:"category"`
+		Message   string  `json:"message"`
 	}
 
-	type BloodEntry struct {
-		Timestamp string `json:"timestamp"`
-		Diastolic int    `json:"diastolic"`
-		Systolic  int    `json:"systolic"`
-	}
-
-	type ListResponse struct {
-		Weight []WeightEntry `json:"weight"`
-		Blood  []BloodEntry  `json:"blood"`
-	}
-
-	var weightEntries []WeightEntry
+	var entries []Entry
 	for rows.Next() {
-		var entry WeightEntry
-		err := rows.Scan(&entry.Timestamp, &entry.Weight)
+		var entry Entry
+		err := rows.Scan(&entry.Id, &entry.Timestamp, &entry.Category, &entry.Message)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
-			json.NewEncoder(w).Encode(ErrorResponse{Error: "Failed to read weight entry"})
+			json.NewEncoder(w).Encode(ErrorResponse{Error: "Failed to read entry"})
+			fmt.Println("Failed to read entry:", err)
 			return
 		}
-		weightEntries = append(weightEntries, entry)
-	}
-
-	rows, err = db.Query("SELECT timestamp, diastolic, systolic FROM blood ORDER BY timestamp DESC")
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		json.NewEncoder(w).Encode(ErrorResponse{Error: "Failed to query blood pressure"})
-		return
+		entries = append(entries, entry)
 	}
 	defer rows.Close()
-
-	var bloodEntries []BloodEntry
-	for rows.Next() {
-		var entry BloodEntry
-		err := rows.Scan(&entry.Timestamp, &entry.Diastolic, &entry.Systolic)
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			json.NewEncoder(w).Encode(ErrorResponse{Error: "Failed to read blood pressure entry"})
-			return
-		}
-		bloodEntries = append(bloodEntries, entry)
-	}
-
-	response := ListResponse{
-		Weight: weightEntries,
-		Blood:  bloodEntries,
-	}
 
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(response)
+	json.NewEncoder(w).Encode(entries)
 }
 
 
