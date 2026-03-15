@@ -42,10 +42,10 @@ func main() {
 	http.HandleFunc("/list", handleList)
 
 	// Start HTTP server for local development
-	fmt.Println("Herdbook API server starting on :9002 (HTTP)...")
-	fmt.Println("Open http://localhost:9002/ in your browser")
-	log.Fatal(http.ListenAndServe(":9002", nil))
-	//log.Fatal(http.ListenAndServeLTS(":9002", nil))
+	fmt.Println("Herdbook API server starting on :9002 (HTTPS)...")
+	fmt.Println("Open https://localhost:9002/ in your browser")
+	//log.Fatal(http.ListenAndServe(":9002", nil))
+	log.Fatal(http.ListenAndServeTLS(":9002", "server.crt", "server.key", nil))
 
 }
 
