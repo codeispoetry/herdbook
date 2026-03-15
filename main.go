@@ -20,7 +20,7 @@ import (
 
 type ValueRequest struct {
 	Category string `json:"category"`
-	Message string     `json:"message"`
+	Message  string `json:"message"`
 }
 
 type ErrorResponse struct {
@@ -41,10 +41,12 @@ func main() {
 	http.HandleFunc("/post", handlePost)
 	http.HandleFunc("/list", handleList)
 
-	// Start HTTPS server
-	fmt.Println("Herdbook API server starting on :9002 (HTTPS)...")
-	fmt.Println("Open https://tom-rose.de/herdbook/ in your browser")
-	log.Fatal(http.ListenAndServeTLS(":9002", "server.crt", "server.key", nil))
+	// Start HTTP server for local development
+	fmt.Println("Herdbook API server starting on :9002 (HTTP)...")
+	fmt.Println("Open http://localhost:9002/ in your browser")
+	log.Fatal(http.ListenAndServe(":9002", nil))
+	//log.Fatal(http.ListenAndServeLTS(":9002", nil))
+
 }
 
 func handleHome(w http.ResponseWriter, r *http.Request) {
@@ -101,9 +103,6 @@ func handlePost(w http.ResponseWriter, r *http.Request) {
 		log.Println("Failed to save message:", err)
 		return
 	}
-	
-
-
 
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(ValueRequest{Category: req.Category, Message: req.Message})
@@ -140,10 +139,10 @@ func handleList(w http.ResponseWriter, r *http.Request) {
 	defer rows.Close()
 
 	type Entry struct {
-		Id        int     `json:"id"`
-		Timestamp string  `json:"timestamp"`
-		Category  string  `json:"category"`
-		Message   string  `json:"message"`
+		Id        int    `json:"id"`
+		Timestamp string `json:"timestamp"`
+		Category  string `json:"category"`
+		Message   string `json:"message"`
 	}
 
 	var entries []Entry
@@ -164,7 +163,6 @@ func handleList(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(entries)
 }
 
-
 func initDB() {
 	db, err := sql.Open("sqlite3", "herdbook.db")
 	if err != nil {
@@ -184,7 +182,6 @@ func initDB() {
 	if err != nil {
 		log.Fatal("Failed to create entries table:", err)
 	}
-
 
 	fmt.Println("Database initialized successfully")
 }
