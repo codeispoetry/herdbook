@@ -162,6 +162,76 @@
         .preset-btn:active {
             transform: scale(0.98);
         }
+        
+        /* Entries list styling */
+        .entries-container {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #fafafa;
+        }
+        .entry-item {
+            background: white;
+            border: 1px solid #87CEEB;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            box-shadow: 0 1px 3px rgba(70,130,180,0.1);
+        }
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .entry-category {
+            background-color: #4682B4;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .entry-timestamp {
+            color: #666;
+            font-size: 12px;
+        }
+        .entry-message {
+            color: #2F4F4F;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        #refreshBtn:hover {
+            background-color: #4682B4;
+            color: white;
+        }
+        
+        /* Filter buttons styling */
+        .filter-btn {
+            background-color: white;
+            color: #2F4F4F;
+            padding: 6px 12px;
+            border: 1px solid #87CEEB;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+            width: auto;
+        }
+        .filter-btn:hover {
+            background-color: #87CEEB;
+            color: #2F4F4F;
+        }
+        .filter-btn.active {
+            background-color: #4682B4;
+            color: white;
+            border-color: #4682B4;
+        }
+        .filter-btn.active:hover {
+            background-color: #2F4F4F;
+        }
     </style>
 </head>
 <body>
@@ -173,7 +243,7 @@
             <div class="form-group">
                 <label for="category">Für wen:</label>
                 <select id="category" name="category">
-                    <option value="Herde">alle (Herde)</option>
+                    <option value="Herde">Herde</option>
                     <option value="Ferdinand">Ferdinand</option>
                     <option value="Wolke">Wolke</option>
                     <option value="Sunflower">Sunflower</option>
@@ -197,12 +267,133 @@
         </form>
         
         <div id="result" class="result"></div>
+        
+        <!-- Entries List Section -->
+        <div style="margin-top: 30px; border-top: 2px solid #87CEEB; padding-top: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h2 style="color: #2F4F4F; margin: 0;">Herdbuch Einträge</h2>
+                <button type="button" id="refreshBtn" style="background-color: #87CEEB; color: #2F4F4F; padding: 8px 15px; border: 1px solid #4682B4; border-radius: 5px; cursor: pointer; font-size: 14px; width: auto;">🔄 Aktualisieren</button>
+            </div>
+            
+            <!-- Filter Section -->
+            <div style="margin-bottom: 15px; padding: 10px; background-color: #f0f8ff; border-radius: 8px; border: 1px solid #87CEEB;">
+                <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #2F4F4F; font-size: 14px;">Filter nach Kategorie:</label>
+                <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                    <button type="button" class="filter-btn" data-filter="Herde">🐑 Herde</button>
+                    <button type="button" class="filter-btn" data-filter="Ferdinand">Ferdinand</button>
+                    <button type="button" class="filter-btn" data-filter="Wolke">Wolke</button>
+                    <button type="button" class="filter-btn" data-filter="Sunflower">Sunflower</button>
+                    <button type="button" class="filter-btn" data-filter="Flocke">Flocke</button>
+                    <button type="button" class="filter-btn" data-filter="Hope">Hope</button>
+                </div>
+            </div>
+            
+            <div id="entriesList" class="entries-container">
+                <p style="text-align: center; color: #666; font-style: italic;">Lade Einträge...</p>
+            </div>
+        </div>
     </div>
 
 
     <script>
         function setPresetMessage(message) {
             document.getElementById('message').value = message;
+        }
+        
+        // Load entries on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadEntries();
+            setupFilterButtons();
+        });
+        
+        // Store all entries for filtering
+        let allEntries = [];
+        let currentFilter = 'all';
+        
+        // Setup filter button event listeners
+        function setupFilterButtons() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Set current filter
+                    currentFilter = this.getAttribute('data-filter');
+                    
+                    // Apply filter to current entries
+                    displayEntries(allEntries, currentFilter);
+                });
+            });
+        }
+        
+        // Refresh button event listener
+        document.getElementById('refreshBtn').addEventListener('click', function() {
+            loadEntries();
+        });
+        
+        async function loadEntries() {
+            const entriesContainer = document.getElementById('entriesList');
+            const refreshBtn = document.getElementById('refreshBtn');
+            
+            // Show loading state
+            entriesContainer.innerHTML = '<p style="text-align: center; color: #666; font-style: italic;">Lade Einträge...</p>';
+            refreshBtn.disabled = true;
+            refreshBtn.innerHTML = '⏳ Laden...';
+            
+            try {
+                const response = await fetch('http://localhost:9002/list');
+                const data = await response.json();
+                
+                if (response.ok && Array.isArray(data)) {
+                    allEntries = data; // Store all entries
+                    displayEntries(data, currentFilter);
+                } else {
+                    entriesContainer.innerHTML = '<p style="text-align: center; color: #721c24;">Fehler beim Laden der Einträge</p>';
+                }
+            } catch (error) {
+                entriesContainer.innerHTML = `<p style="text-align: center; color: #721c24;">Netzwerkfehler: ${error.message}</p>`;
+            } finally {
+                refreshBtn.disabled = false;
+                refreshBtn.innerHTML = '🔄 Aktualisieren';
+            }
+        }
+        
+        function displayEntries(entries, filter = 'all') {
+            const entriesContainer = document.getElementById('entriesList');
+            
+            // Filter entries based on selected filter
+            let filteredEntries = entries;
+            if (filter !== 'all') {
+                filteredEntries = entries.filter(entry => entry.category === filter);
+            }
+            
+            if (filteredEntries.length === 0) {
+                const message = filter === 'all' ? 
+                    'Noch keine Einträge vorhanden' : 
+                    `Keine Einträge für ${filter} gefunden`;
+                entriesContainer.innerHTML = `<p style="text-align: center; color: #666; font-style: italic;">${message}</p>`;
+                return;
+            }
+            
+            const entriesHTML = filteredEntries.map(entry => {
+                const date = new Date(entry.timestamp);
+                const formattedDate = date.toLocaleDateString('de-DE') + ' ' + date.toLocaleTimeString('de-DE', {hour: '2-digit', minute: '2-digit'});
+                
+                return `
+                    <div class="entry-item">
+                        <div class="entry-header">
+                            <span class="entry-category">${entry.category}</span>
+                            <span class="entry-timestamp">${formattedDate}</span>
+                        </div>
+                        <div class="entry-message">${entry.message}</div>
+                    </div>
+                `;
+            }).join('');
+            
+            entriesContainer.innerHTML = entriesHTML;
         }
         
         document.getElementById('logForm').addEventListener('submit', async function(e) {
@@ -243,6 +434,8 @@
                     showResult(`Message submitted successfully!`, 'success');
                     messageInput.value = ''; // Clear the form
                     document.getElementById('category').value = 'Herde';
+                    // Refresh entries list after successful submission
+                    setTimeout(() => loadEntries(), 500);
                 } else {
                     showResult(`Error: ${data.error}`, 'error');
                 }
