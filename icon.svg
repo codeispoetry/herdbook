@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#87CEEB;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4682B4;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="wool" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFAF0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F5F5DC;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle with sky gradient -->
+  <circle cx="96" cy="96" r="90" fill="url(#bg)" stroke="#2F4F4F" stroke-width="4"/>
+  
+  <!-- Sheep body (fluffy cloud-like) -->
+  <g fill="url(#wool)" stroke="#D3D3D3" stroke-width="1">
+    <!-- Main body -->
+    <ellipse cx="96" cy="110" rx="35" ry="25"/>
+    <!-- Fluffy wool bumps -->
+    <circle cx="75" cy="95" r="15"/>
+    <circle cx="95" cy="85" r="18"/>
+    <circle cx="115" cy="95" r="15"/>
+    <circle cx="85" cy="110" r="12"/>
+    <circle cx="105" cy="110" r="12"/>
+    <circle cx="90" cy="125" r="10"/>
+    <circle cx="102" cy="125" r="10"/>
+  </g>
+  
+  <!-- Sheep head -->
+  <ellipse cx="96" cy="70" rx="20" ry="18" fill="#FFB6C1" stroke="#D3D3D3" stroke-width="1"/>
+  
+  <!-- Ears -->
+  <ellipse cx="82" cy="65" rx="6" ry="10" fill="#FFB6C1" stroke="#D3D3D3" stroke-width="1" transform="rotate(-20 82 65)"/>
+  <ellipse cx="110" cy="65" rx="6" ry="10" fill="#FFB6C1" stroke="#D3D3D3" stroke-width="1" transform="rotate(20 110 65)"/>
+  
+  <!-- Eyes -->
+  <circle cx="88" cy="68" r="4" fill="#000"/>
+  <circle cx="104" cy="68" r="4" fill="#000"/>
+  <circle cx="89" cy="67" r="1.5" fill="#FFF"/>
+  <circle cx="105" cy="67" r="1.5" fill="#FFF"/>
+  
+  <!-- Nose -->
+  <ellipse cx="96" cy="75" rx="3" ry="2" fill="#000"/>
+  
+  <!-- Legs -->
+  <g fill="#2F4F4F" stroke="#000" stroke-width="1">
+    <rect x="78" y="130" width="6" height="20" rx="3"/>
+    <rect x="90" y="130" width="6" height="20" rx="3"/>
+    <rect x="100" y="130" width="6" height="20" rx="3"/>
+    <rect x="112" y="130" width="6" height="20" rx="3"/>
+  </g>
+  
+  <!-- Hooves -->
+  <g fill="#000">
+    <ellipse cx="81" cy="152" rx="4" ry="2"/>
+    <ellipse cx="93" cy="152" rx="4" ry="2"/>
+    <ellipse cx="103" cy="152" rx="4" ry="2"/>
+    <ellipse cx="115" cy="152" rx="4" ry="2"/>
+  </g>
+  
+  <!-- Cute grass at bottom -->
+  <g fill="#228B22" opacity="0.8">
+    <path d="M20 160 Q25 150 30 160 Q35 150 40 160 Q45 150 50 160"/>
+    <path d="M140 160 Q145 150 150 160 Q155 150 160 160 Q165 150 170 160"/>
+  </g>
+</svg>
