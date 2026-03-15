@@ -186,7 +186,7 @@
             align-items: center;
             margin-bottom: 8px;
         }
-        .entry-category {
+        .entry-scope {
             background-color: #4682B4;
             color: white;
             padding: 4px 8px;
@@ -241,8 +241,8 @@
         </div>
         <form id="logForm">
             <div class="form-group">
-                <label for="category">Für wen:</label>
-                <select id="category" name="category">
+                <label for="scope">Für wen:</label>
+                <select id="scope" name="scope">
                     <option value="Herde">Herde</option>
                     <option value="Ferdinand">Ferdinand</option>
                     <option value="Wolke">Wolke</option>
@@ -251,7 +251,7 @@
                     <option value="Hope">Hope</option>
                 </select>
                 <label for="message">Eintrag:</label>
-                <input type="text" id="message" name="message" placeholder="Enter your message">
+                <input type="text" id="message" name="message" placeholder="Eintrag hier eingeben..." required>
                 
                 <div style="margin-top: 10px; margin-bottom: 15px;">
                     <label style="margin-bottom: 8px;">Schnelleintrag:</label>
@@ -277,8 +277,9 @@
             
             <!-- Filter Section -->
             <div style="margin-bottom: 15px; padding: 10px; background-color: #f0f8ff; border-radius: 8px; border: 1px solid #87CEEB;">
-                <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #2F4F4F; font-size: 14px;">Filter nach Kategorie:</label>
+                <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #2F4F4F; font-size: 14px;">Filter nach Bereich:</label>
                 <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                    <button type="button" class="filter-btn active" data-filter="all">Alle Einträge</button>
                     <button type="button" class="filter-btn" data-filter="Herde">🐑 Herde</button>
                     <button type="button" class="filter-btn" data-filter="Ferdinand">Ferdinand</button>
                     <button type="button" class="filter-btn" data-filter="Wolke">Wolke</button>
@@ -367,7 +368,7 @@
             // Filter entries based on selected filter
             let filteredEntries = entries;
             if (filter !== 'all') {
-                filteredEntries = entries.filter(entry => entry.category === filter);
+                filteredEntries = entries.filter(entry => entry.scope === filter);
             }
             
             if (filteredEntries.length === 0) {
@@ -385,7 +386,7 @@
                 return `
                     <div class="entry-item">
                         <div class="entry-header">
-                            <span class="entry-category">${entry.category}</span>
+                            <span class="entry-scope">${entry.scope}</span>
                             <span class="entry-timestamp">${formattedDate}</span>
                         </div>
                         <div class="entry-message">${entry.message}</div>
@@ -424,7 +425,7 @@
                     },
                     body: JSON.stringify({ 
                         message: message,
-                        category: document.getElementById('category').value
+                        scope: document.getElementById('scope').value
                     })
                 });
                 console.log('Response status:', response.status);
@@ -433,7 +434,7 @@
                 if (response.ok) {
                     showResult(`Message submitted successfully!`, 'success');
                     messageInput.value = ''; // Clear the form
-                    document.getElementById('category').value = 'Herde';
+                    document.getElementById('scope').value = 'Herde';
                     // Refresh entries list after successful submission
                     setTimeout(() => loadEntries(), 500);
                 } else {

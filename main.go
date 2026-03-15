@@ -19,7 +19,7 @@ import (
 )
 
 type ValueRequest struct {
-	Category string `json:"category"`
+	Scope string `json:"scope"`
 	Message  string `json:"message"`
 }
 
@@ -96,7 +96,7 @@ func handlePost(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
-	_, err = db.Exec("INSERT INTO entries (timestamp, category, message) VALUES (CURRENT_TIMESTAMP, ?, ?)", req.Category, req.Message)
+	_, err = db.Exec("INSERT INTO entries (timestamp, scope, message) VALUES (CURRENT_TIMESTAMP, ?, ?)", req.Scope, req.Message)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(w).Encode(ErrorResponse{Error: "Failed to save message"})
@@ -105,7 +105,7 @@ func handlePost(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(ValueRequest{Category: req.Category, Message: req.Message})
+	json.NewEncoder(w).Encode(ValueRequest{Scope: req.Scope, Message: req.Message})
 }
 
 func handleList(w http.ResponseWriter, r *http.Request) {
@@ -141,14 +141,14 @@ func handleList(w http.ResponseWriter, r *http.Request) {
 	type Entry struct {
 		Id        int    `json:"id"`
 		Timestamp string `json:"timestamp"`
-		Category  string `json:"category"`
+		Scope     string  `json:"scope"`
 		Message   string `json:"message"`
 	}
 
 	var entries []Entry
 	for rows.Next() {
 		var entry Entry
-		err := rows.Scan(&entry.Id, &entry.Timestamp, &entry.Category, &entry.Message)
+		err := rows.Scan(&entry.Id, &entry.Timestamp, &entry.Scope, &entry.Message)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			json.NewEncoder(w).Encode(ErrorResponse{Error: "Failed to read entry"})
@@ -174,7 +174,7 @@ func initDB() {
 	createEntryTableSQL := `CREATE TABLE IF NOT EXISTS entries (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-		category TEXT NOT NULL,
+		scope TEXT NOT NULL,
 		message TEXT NOT NULL
 	);`
 
