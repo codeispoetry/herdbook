@@ -1,67 +1,323 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
-  <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#87CEEB;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#4682B4;stop-opacity:1" />
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 192 192"
+   version="1.1"
+   id="svg23"
+   sodipodi:docname="icon.svg"
+   inkscape:version="1.4.3 (1:1.4.3+202512261035+0d15f75042)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview23"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="4.6770833"
+     inkscape:cx="95.893096"
+     inkscape:cy="96.000001"
+     inkscape:window-width="3370"
+     inkscape:window-height="1371"
+     inkscape:window-x="70"
+     inkscape:window-y="32"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g19" />
+  <defs
+     id="defs4">
+    <linearGradient
+       id="bg"
+       x1="0%"
+       y1="0%"
+       x2="100%"
+       y2="100%">
+      <stop
+         offset="0%"
+         style="stop-color:#87CEEB;stop-opacity:1"
+         id="stop1" />
+      <stop
+         offset="100%"
+         style="stop-color:#4682B4;stop-opacity:1"
+         id="stop2" />
     </linearGradient>
-    <linearGradient id="wool" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#FFFAF0;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#F5F5DC;stop-opacity:1" />
+    <linearGradient
+       id="wool"
+       x1="0%"
+       y1="0%"
+       x2="100%"
+       y2="100%">
+      <stop
+         offset="0%"
+         style="stop-color:#FFFAF0;stop-opacity:1"
+         id="stop3" />
+      <stop
+         offset="100%"
+         style="stop-color:#F5F5DC;stop-opacity:1"
+         id="stop4" />
     </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#wool"
+       id="linearGradient1"
+       x1="51.275663"
+       y1="99.701294"
+       x2="111.45041"
+       y2="159.87604"
+       gradientTransform="scale(1.179897,0.84753163)"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#wool"
+       id="linearGradient2"
+       x1="59.5"
+       y1="79.5"
+       x2="90.5"
+       y2="110.5"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#wool"
+       id="linearGradient3"
+       x1="76.5"
+       y1="66.5"
+       x2="113.5"
+       y2="103.5"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#wool"
+       id="linearGradient4"
+       x1="99.5"
+       y1="79.5"
+       x2="130.5"
+       y2="110.5"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#wool"
+       id="linearGradient5"
+       x1="72.5"
+       y1="97.5"
+       x2="97.5"
+       y2="122.5"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#wool"
+       id="linearGradient6"
+       x1="92.5"
+       y1="97.5"
+       x2="117.5"
+       y2="122.5"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#wool"
+       id="linearGradient7"
+       x1="79.5"
+       y1="114.5"
+       x2="100.5"
+       y2="135.5"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#wool"
+       id="linearGradient8"
+       x1="91.5"
+       y1="114.5"
+       x2="112.5"
+       y2="135.5"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#wool"
+       id="linearGradient9"
+       x1="58.247228"
+       y1="67.930271"
+       x2="128.73127"
+       y2="138.41431"
+       gradientTransform="scale(1.0215078,0.97894501)"
+       gradientUnits="userSpaceOnUse" />
   </defs>
-  
   <!-- Background circle with sky gradient -->
-  <circle cx="96" cy="96" r="90" fill="url(#bg)" stroke="#2F4F4F" stroke-width="4"/>
-  
+  <rect
+     width="192"
+     height="192"
+     fill="url(#bg)"
+     id="circle4" />
+  <g
+     fill="#2f4f4f"
+     stroke="#000000"
+     stroke-width="1"
+     id="g19"
+     transform="matrix(1.7806304,0,0,1.7806304,-69.311299,-87.718201)">
+    <rect
+       x="90"
+       y="130"
+       width="6"
+       height="20"
+       rx="3"
+       id="rect17" />
+    <rect
+       x="100"
+       y="130"
+       width="6"
+       height="20"
+       rx="3"
+       id="rect18" />
+  </g>
   <!-- Sheep body (fluffy cloud-like) -->
-  <g fill="url(#wool)" stroke="#D3D3D3" stroke-width="1">
+  <g
+     fill="url(#wool)"
+     stroke="#d3d3d3"
+     stroke-width="1"
+     id="g11"
+     style="fill:url(#linearGradient9)"
+     transform="matrix(1.7806304,0,0,1.7806304,-69.311299,-87.718201)">
     <!-- Main body -->
-    <ellipse cx="96" cy="110" rx="35" ry="25"/>
+    <ellipse
+       cx="96"
+       cy="110"
+       rx="35"
+       ry="25"
+       id="ellipse4"
+       style="fill:url(#linearGradient1)" />
     <!-- Fluffy wool bumps -->
-    <circle cx="75" cy="95" r="15"/>
-    <circle cx="95" cy="85" r="18"/>
-    <circle cx="115" cy="95" r="15"/>
-    <circle cx="85" cy="110" r="12"/>
-    <circle cx="105" cy="110" r="12"/>
-    <circle cx="90" cy="125" r="10"/>
-    <circle cx="102" cy="125" r="10"/>
+    <circle
+       cx="75"
+       cy="95"
+       r="15"
+       id="circle5"
+       style="fill:url(#linearGradient2)" />
+    <circle
+       cx="95"
+       cy="85"
+       r="18"
+       id="circle6"
+       style="fill:url(#linearGradient3)" />
+    <circle
+       cx="115"
+       cy="95"
+       r="15"
+       id="circle7"
+       style="fill:url(#linearGradient4)" />
+    <circle
+       cx="85"
+       cy="110"
+       r="12"
+       id="circle8"
+       style="fill:url(#linearGradient5)" />
+    <circle
+       cx="105"
+       cy="110"
+       r="12"
+       id="circle9"
+       style="fill:url(#linearGradient6)" />
+    <circle
+       cx="90"
+       cy="125"
+       r="10"
+       id="circle10"
+       style="fill:url(#linearGradient7)" />
+    <circle
+       cx="102"
+       cy="125"
+       r="10"
+       id="circle11"
+       style="fill:url(#linearGradient8)" />
   </g>
-  
   <!-- Sheep head -->
-  <ellipse cx="96" cy="70" rx="20" ry="18" fill="#FFB6C1" stroke="#D3D3D3" stroke-width="1"/>
-  
+  <ellipse
+     cx="101.62923"
+     cy="36.92593"
+     rx="35.61261"
+     ry="32.05135"
+     fill="#ffb6c1"
+     stroke="#d3d3d3"
+     stroke-width="1.21704"
+     id="ellipse11" />
   <!-- Ears -->
-  <ellipse cx="82" cy="65" rx="6" ry="10" fill="#FFB6C1" stroke="#D3D3D3" stroke-width="1" transform="rotate(-20 82 65)"/>
-  <ellipse cx="110" cy="65" rx="6" ry="10" fill="#FFB6C1" stroke="#D3D3D3" stroke-width="1" transform="rotate(20 110 65)"/>
-  
+  <ellipse
+     cx="62.490444"
+     cy="52.56588"
+     rx="10.683783"
+     ry="17.806305"
+     fill="#ffb6c1"
+     stroke="#d3d3d3"
+     stroke-width="1.21704"
+     transform="rotate(-20)"
+     id="ellipse12" />
+  <ellipse
+     cx="128.51003"
+     cy="-16.952604"
+     rx="10.683783"
+     ry="17.806305"
+     fill="#ffb6c1"
+     stroke="#d3d3d3"
+     stroke-width="1.21704"
+     transform="rotate(20)"
+     id="ellipse13" />
   <!-- Eyes -->
-  <circle cx="88" cy="68" r="4" fill="#000"/>
-  <circle cx="104" cy="68" r="4" fill="#000"/>
-  <circle cx="89" cy="67" r="1.5" fill="#FFF"/>
-  <circle cx="105" cy="67" r="1.5" fill="#FFF"/>
-  
+  <circle
+     cx="87.384186"
+     cy="33.36467"
+     r="7.1225219"
+     fill="#000000"
+     id="circle13"
+     style="stroke-width:1.78063" />
+  <circle
+     cx="115.87426"
+     cy="33.36467"
+     r="7.1225219"
+     fill="#000000"
+     id="circle14"
+     style="stroke-width:1.78063" />
+  <circle
+     cx="89.16481"
+     cy="31.584038"
+     r="2.6709456"
+     fill="#ffffff"
+     id="circle15"
+     style="stroke-width:1.78063" />
+  <circle
+     cx="117.65491"
+     cy="31.584038"
+     r="2.6709456"
+     fill="#ffffff"
+     id="circle16"
+     style="stroke-width:1.78063" />
   <!-- Nose -->
-  <ellipse cx="96" cy="75" rx="3" ry="2" fill="#000"/>
-  
+  <ellipse
+     cx="101.62923"
+     cy="45.829082"
+     rx="5.3418913"
+     ry="3.5612609"
+     fill="#000000"
+     id="ellipse16"
+     style="stroke-width:1.78063" />
   <!-- Legs -->
-  <g fill="#2F4F4F" stroke="#000" stroke-width="1">
-    <rect x="78" y="130" width="6" height="20" rx="3"/>
-    <rect x="90" y="130" width="6" height="20" rx="3"/>
-    <rect x="100" y="130" width="6" height="20" rx="3"/>
-    <rect x="112" y="130" width="6" height="20" rx="3"/>
-  </g>
-  
   <!-- Hooves -->
-  <g fill="#000">
-    <ellipse cx="81" cy="152" rx="4" ry="2"/>
-    <ellipse cx="93" cy="152" rx="4" ry="2"/>
-    <ellipse cx="103" cy="152" rx="4" ry="2"/>
-    <ellipse cx="115" cy="152" rx="4" ry="2"/>
+  <g
+     fill="#000000"
+     id="g22"
+     transform="matrix(1.7806304,0,0,1.7806304,-69.311299,-87.718201)">
+    <ellipse
+       cx="93"
+       cy="152"
+       rx="4"
+       ry="2"
+       id="ellipse20" />
+    <ellipse
+       cx="103"
+       cy="152"
+       rx="4"
+       ry="2"
+       id="ellipse21" />
   </g>
-  
   <!-- Cute grass at bottom -->
-  <g fill="#228B22" opacity="0.8">
-    <path d="M20 160 Q25 150 30 160 Q35 150 40 160 Q45 150 50 160"/>
-    <path d="M140 160 Q145 150 150 160 Q155 150 160 160 Q165 150 170 160"/>
-  </g>
 </svg>

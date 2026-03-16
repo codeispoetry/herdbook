@@ -11,7 +11,7 @@
   </defs>
   
   <!-- Background circle with sky gradient -->
-  <circle cx="256" cy="256" r="240" fill="url(#bg)" stroke="#2F4F4F" stroke-width="10"/>
+  <rect width="480" height="480" fill="url(#bg)"/>
   
   <!-- Sheep body (fluffy cloud-like) -->
   <g fill="url(#wool)" stroke="#D3D3D3" stroke-width="3">
@@ -46,25 +46,15 @@
   
   <!-- Legs -->
   <g fill="#2F4F4F" stroke="#000" stroke-width="2">
-    <rect x="200" y="340" width="16" height="50" rx="8"/>
     <rect x="230" y="340" width="16" height="50" rx="8"/>
     <rect x="266" y="340" width="16" height="50" rx="8"/>
-    <rect x="296" y="340" width="16" height="50" rx="8"/>
   </g>
   
   <!-- Hooves -->
   <g fill="#000">
-    <ellipse cx="208" cy="395" rx="10" ry="5"/>
     <ellipse cx="238" cy="395" rx="10" ry="5"/>
     <ellipse cx="274" cy="395" rx="10" ry="5"/>
-    <ellipse cx="304" cy="395" rx="10" ry="5"/>
   </g>
   
-  <!-- Cute grass at bottom -->
-  <g fill="#228B22" opacity="0.8" stroke="#006400" stroke-width="2">
-    <path d="M50 420 Q60 400 70 420 Q80 400 90 420 Q100 400 110 420"/>
-    <path d="M400 420 Q410 400 420 420 Q430 400 440 420 Q450 400 460 420"/>
-    <path d="M150 430 Q160 410 170 430 Q180 410 190 430"/>
-    <path d="M340 430 Q350 410 360 430 Q370 410 380 430"/>
-  </g>
+
 </svg>
