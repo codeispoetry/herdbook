@@ -48,15 +48,16 @@
             font-weight: bold;
             color: #555;
         }
-        input[type="text"] {
+        input[type="text"], input[type="date"] {
             width: 100%;
             padding: 12px;
             border: 2px solid #ddd;
             border-radius: 5px;
             font-size: 16px;
             box-sizing: border-box;
+            height: 50px;
         }
-        input[type="number"]:focus {
+        input[type="number"]:focus, input[type="text"]:focus, input[type="date"]:focus {
             border-color: #4682B4;
             outline: none;
         }
@@ -111,6 +112,7 @@
             margin-bottom: 10px;
             box-sizing: border-box;
             transition: border-color 0.2s;
+            height: 50px;
         }
         select:focus {
             border-color: #4682B4;
@@ -132,7 +134,7 @@
         }
 
         /* Subtle hover for form fields */
-        input[type="text"]:hover, select:hover {
+        input[type="text"]:hover, input[type="date"]:hover, select:hover {
             border-color: #87CEEB;
         }
 
@@ -268,14 +270,18 @@
     <div class="container">
         <form id="logForm">
             <div class="form-group">
-                <select id="scope" name="scope">
-                    <option value="Herde">Herde</option>
-                    <option value="Ferdinand">Ferdinand</option>
-                    <option value="Wolke">Wolke</option>
-                    <option value="Sunflower">Sunflower</option>
-                    <option value="Flocke">Flocke</option>
-                    <option value="Hope">Hope</option>
-                </select>
+                <div style="display:flex;">
+                    <select id="scope" name="scope">
+                        <option value="Herde">Herde</option>
+                        <option value="Ferdinand">Ferdinand</option>
+                        <option value="Wolke">Wolke</option>
+                        <option value="Sunflower">Sunflower</option>
+                        <option value="Flocke">Flocke</option>
+                        <option value="Hope">Hope</option>
+                    </select>
+                    <input type="date" id="date" name="date" required>
+                </div>
+
                 <input type="text" id="message" name="message" placeholder="Eintrag hier eingeben..." required>
                 
                 <div style="display: none; margin-top: 10px; margin-bottom: 15px;">
@@ -324,6 +330,11 @@
         
         // Load entries on page load
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize date field with today's date
+            const dateField = document.getElementById('date');
+            const today = new Date();
+            dateField.valueAsDate = today;
+            
             loadEntries();
             setupFilterButtons();
         });
@@ -466,7 +477,8 @@
                     },
                     body: JSON.stringify({ 
                         message: message,
-                        scope: document.getElementById('scope').value
+                        scope: document.getElementById('scope').value,
+                        date: document.getElementById('date').value
                     })
                 });
                 console.log('Response status:', response.status);
@@ -476,6 +488,7 @@
                     showResult(`Message submitted successfully!`, 'success');
                     messageInput.value = ''; // Clear the form
                     document.getElementById('scope').value = 'Herde';
+                    document.getElementById('date').valueAsDate = new Date(); // Reset to today
                     // Refresh entries list after successful submission
                     setTimeout(() => loadEntries(), 500);
                 } else {

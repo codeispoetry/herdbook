@@ -4,3 +4,5 @@ deploy-gui:
 deploy-server:
 	go build -o herdbook .
 	rsync -avz --delete herdbook tom-rose.de:./herdbook/herdbook
+	ssh tom-rose.de "pkill herdbook & herdbook/herdbook &"
+	

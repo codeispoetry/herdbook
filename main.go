@@ -19,8 +19,9 @@ import (
 )
 
 type ValueRequest struct {
-	Scope string `json:"scope"`
-	Message  string `json:"message"`
+	Scope   string `json:"scope"`
+	Message string `json:"message"`
+	Date    string `json:"date"`
 }
 
 type ErrorResponse struct {
@@ -97,7 +98,23 @@ func handlePost(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
-	_, err = db.Exec("INSERT INTO entries (timestamp, scope, message) VALUES (CURRENT_TIMESTAMP, ?, ?)", req.Scope, req.Message)
+	// Validate and use provided date or current date
+	var timestamp string
+	if req.Date != "" {
+		// Validate date format
+		_, err := time.Parse("2006-01-02", req.Date)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			json.NewEncoder(w).Encode(ErrorResponse{
+				Error: "Invalid date format. Use YYYY-MM-DD",
+			})
+			return
+		}
+		timestamp = req.Date + "T12:00:00Z" // Convert to datetime
+	} else {
+		timestamp = time.Now().Format(time.RFC3339)
+	}
+	_, err = db.Exec("INSERT INTO entries (timestamp, scope, message) VALUES (?, ?, ?)", timestamp, req.Scope, req.Message)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(w).Encode(ErrorResponse{Error: "Failed to save message"})
@@ -106,7 +123,7 @@ func handlePost(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(ValueRequest{Scope: req.Scope, Message: req.Message})
+	json.NewEncoder(w).Encode(ValueRequest{Scope: req.Scope, Message: req.Message, Date: req.Date})
 }
 
 func handleDelete(w http.ResponseWriter, r *http.Request) {
