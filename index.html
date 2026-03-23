@@ -167,8 +167,6 @@
         
         /* Entries list styling */
         .entries-container {
-            max-height: 400px;
-            overflow-y: auto;
             border: 1px solid #ddd;
             border-radius: 5px;
             padding: 10px;
@@ -254,7 +252,8 @@
         }
        
         .filter-btn[data-filter="Flocke"],
-        .filter-btn[data-filter="Hope"] {
+        .filter-btn[data-filter="Hope"],
+        .filter-btn[data-filter="Schwarzi"]{
             background-color: #663C1F;
             color: white;
         }
@@ -275,9 +274,15 @@
                         <option value="Herde">Herde</option>
                         <option value="Ferdinand">Ferdinand</option>
                         <option value="Wolke">Wolke</option>
+
+
+                        
                         <option value="Sunflower">Sunflower</option>
                         <option value="Flocke">Flocke</option>
                         <option value="Hope">Hope</option>
+
+                        <option value="Weissi">Weißi</option>
+                        <option value="Schwarzi">Schwarzi</option>
                     </select>
                     <input type="date" id="date" name="date" required>
                 </div>
@@ -303,13 +308,20 @@
             
             <!-- Filter Section -->
             <div style="margin-bottom: 15px; padding: 10px; background-color: #f0f8ff; border-radius: 8px; border: 1px solid #87CEEB;">
-                <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                <div style="display: flex; gap: 6px; flex-wrap: wrap;align-items: center;">
                     <button type="button" class="filter-btn" data-filter="Herde">🐑 Herde</button>
                     <button type="button" class="filter-btn" data-filter="Ferdinand">Ferdinand</button>
                     <button type="button" class="filter-btn" data-filter="Wolke">Wolke</button>
-                    <button type="button" class="filter-btn" data-filter="Sunflower">Sunflower</button>
+                    <button type="button" class="filter-btn" data-filter="Weissi">Weißi</button>
+                    |
+
                     <button type="button" class="filter-btn" data-filter="Flocke">Flocke</button>
+                    <button type="button" class="filter-btn" data-filter="Schwarzi">Schwarzi</button>
+
+                    |
                     <button type="button" class="filter-btn" data-filter="Hope">Hope</button>
+                    <button type="button" class="filter-btn" data-filter="Sunflower">Sunflower</button>
+
                     <button type="button" class="filter-btn active" data-filter="all" style="margin-left: auto;">Alles</button>
                 </div>
             </div>
@@ -466,8 +478,8 @@
             
             // Show loading state
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Submitting...';
-            showResult('Sending data...', 'loading');
+            submitBtn.textContent = 'Augenblick bitte...';
+            showResult('Daten werden gesendet...', 'loading');
             
             try {
                 const response = await fetch(`${server}/post`, {
@@ -485,22 +497,22 @@
                 const data = await response.json();
                 
                 if (response.ok) {
-                    showResult(`Message submitted successfully!`, 'success');
+                    showResult(`Nachricht erfolgreich gesendet!`, 'success');
                     messageInput.value = ''; // Clear the form
                     document.getElementById('scope').value = 'Herde';
                     document.getElementById('date').valueAsDate = new Date(); // Reset to today
                     // Refresh entries list after successful submission
                     setTimeout(() => loadEntries(), 500);
                 } else {
-                    showResult(`Error: ${data.error}`, 'error');
+                    showResult(`Fehler: ${data.error}`, 'error');
                 }
                 
             } catch (error) {
-                showResult(`Network error: ${error.message}`, 'error');
+                showResult(`Netzwerkfehler: ${error.message}`, 'error');
             } finally {
                 // Reset button
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Submit';
+                submitBtn.textContent = 'Speichern';
             }
         });
         
