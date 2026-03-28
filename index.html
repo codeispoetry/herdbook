@@ -246,14 +246,22 @@
             font-weight: bold;
         }
 
-        .filter-btn[data-filter="Ferdinand"]{
-            background-color: #eff0f1;
+        .white{
+            background-color: #ffffff;
             color: #2F4F4F;
         }
+
+        .gray{
+            background-color: #a9a9a9;
+            color: white;
+        }
+
+        .black{
+            background-color: #000000;
+            color: white;
+        }
        
-        .filter-btn[data-filter="Flocke"],
-        .filter-btn[data-filter="Hope"],
-        .filter-btn[data-filter="Schwarzi"]{
+        .brown{
             background-color: #663C1F;
             color: white;
         }
@@ -276,10 +284,10 @@
                         <option value="Wolke">Wolke</option>
 
 
-                        
                         <option value="Sunflower">Sunflower</option>
                         <option value="Flocke">Flocke</option>
                         <option value="Hope">Hope</option>
+                        <option value="Anna">Anna</option>
 
                         <option value="Schneeflocke">Schneeflocke</option>
                         <option value="Luna">Luna</option>
@@ -300,6 +308,12 @@
             
             <button type="submit" id="submitBtn">Speichern</button>
         </form>
+
+        <div style="margin-top: 20px; padding: 10px; background-color: #f0f8ff; border-radius: 8px; border: 1px solid #87CEEB; text-align: center;">
+            🐑 <span class="age" data-start="2026-03-26"></span>
+            🌙  <span class="age" data-start="2026-03-16"></span>
+            ❄️ <span class="age" data-start="2026-03-15"></span>
+        </div>
         
         <div id="result" class="result"></div>
         
@@ -309,20 +323,23 @@
             <!-- Filter Section -->
             <div style="margin-bottom: 15px; padding: 10px; background-color: #f0f8ff; border-radius: 8px; border: 1px solid #87CEEB;">
                 <div style="display: flex; gap: 6px; flex-wrap: wrap;align-items: center;">
-                    <button type="button" class="filter-btn" data-filter="Herde">🐑 Herde</button>
-                    <button type="button" class="filter-btn" data-filter="Ferdinand">Ferdinand</button>
-                    <button type="button" class="filter-btn" data-filter="Wolke">Wolke</button>
-                    <button type="button" class="filter-btn" data-filter="Schneeflocke">Schneeflocke</button>
+                    <button type="button" class="filter-btn" data-filter="Herde">Herde</button>
+                    <button type="button" class="filter-btn white" data-filter="Ferdinand">Ferdinand 🐑</button>
+                    |
+                    <button type="button" class="filter-btn white" data-filter="Wolke">Wolke ☁️ </button>
+                    <button type="button" class="filter-btn white" data-filter="Schneeflocke">Schneeflocke ❄️</button>
                     |
 
-                    <button type="button" class="filter-btn" data-filter="Flocke">Flocke</button>
-                    <button type="button" class="filter-btn" data-filter="Luna">Luna</button>
+                    <button type="button" class="filter-btn brown" data-filter="Flocke">Flocke ❄️</button>
+                    <button type="button" class="filter-btn black" data-filter="Luna">Luna 🌙</button>
 
                     |
-                    <button type="button" class="filter-btn" data-filter="Hope">Hope</button>
-                    <button type="button" class="filter-btn" data-filter="Sunflower">Sunflower</button>
+                    <button type="button" class="filter-btn brown" data-filter="Hope">Hope 🌈</button>
+                    <button type="button" class="filter-btn gray" data-filter="Anna">Anna 🐑</button>
+                    |
+                    <button type="button" class="filter-btn white" data-filter="Sunflower">Sunflower 🌻</button>
 
-                    <button type="button" class="filter-btn active" data-filter="all" style="margin-left: auto;">Alles</button>
+                    <button type="button" class="filter-btn active" data-filter="all" style="margin-left: auto;">Alles </button>
                 </div>
             </div>
             
@@ -529,6 +546,23 @@
                 }, 3000);
             }
         }
+        
+         // Age calculation
+        function calculateAge(startDate) {
+            const start = new Date(startDate);
+            const now = new Date();
+            const diffTime = Math.abs(now - start);
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            return diffDays;
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const ageElements = document.querySelectorAll('.age');
+            ageElements.forEach(el => {
+                const startDate = el.getAttribute('data-start');
+                const age = calculateAge(startDate);
+                el.textContent = `(${age} Tage)`;
+            });
+        });
     </script>
     
     <script>
