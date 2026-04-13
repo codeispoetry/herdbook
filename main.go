@@ -202,7 +202,7 @@ func handleList(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
-	rows, err := db.Query("SELECT * FROM entries ORDER BY timestamp DESC")
+	rows, err := db.Query("SELECT id,timestamp,scope,message,CAST((julianday(timestamp) - julianday(MIN(timestamp) OVER (PARTITION BY scope))) AS INTEGER) AS age FROM entries ORDER BY timestamp DESC;")
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(w).Encode(ErrorResponse{Error: "Failed to query entries"})
@@ -216,12 +216,13 @@ func handleList(w http.ResponseWriter, r *http.Request) {
 		Timestamp string `json:"timestamp"`
 		Scope     string  `json:"scope"`
 		Message   string `json:"message"`
+		Age	  	  float64    `json:"age"`
 	}
 
 	var entries []Entry
 	for rows.Next() {
 		var entry Entry
-		err := rows.Scan(&entry.Id, &entry.Timestamp, &entry.Scope, &entry.Message)
+		err := rows.Scan(&entry.Id, &entry.Timestamp, &entry.Scope, &entry.Message, &entry.Age)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			json.NewEncoder(w).Encode(ErrorResponse{Error: "Failed to read entry"})

@@ -6,3 +6,6 @@ deploy-server:
 	rsync -avz --delete herdbook tom-rose.de:./herdbook/herdbook
 	ssh tom-rose.de "pkill herdbook & herdbook/herdbook &"
 	
+
+rename:
+	ssh tom-rose.de "sqlite3 herdbook/herdbook.db 'UPDATE entries SET scope=\"Puschel\" WHERE scope=\"Anna\";'"

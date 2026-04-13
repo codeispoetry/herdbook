@@ -271,6 +271,13 @@
             background-color: #87CEEB;
             color: #2F4F4F;
         }
+        
+        /* Scope age styling */
+        .scope-age {
+            color: #666;
+            font-size: 12px;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -287,7 +294,7 @@
                         <option value="Sunflower">Sunflower</option>
                         <option value="Flocke">Flocke</option>
                         <option value="Hope">Hope</option>
-                        <option value="Anna">Anna</option>
+                        <option value="Puschel">Puschel</option>
 
                         <option value="Schneeflocke">Schneeflocke</option>
                         <option value="Luna">Luna</option>
@@ -335,7 +342,7 @@
 
                     |
                     <button type="button" class="filter-btn brown" data-filter="Hope">Hope 🌈</button>
-                    <button type="button" class="filter-btn gray" data-filter="Anna">Anna 🐑</button>
+                    <button type="button" class="filter-btn gray" data-filter="Puschel">Puschel 🐑</button>
                     |
                     <button type="button" class="filter-btn white" data-filter="Sunflower">Sunflower 🌻</button>
 
@@ -438,6 +445,7 @@
                     <div class="entry-item">
                         <div class="entry-header">
                             <span class="entry-scope">${entry.scope}</span>
+                            <span class="scope-age">${formatAgeDetailed(entry.age)}</span>
                             <div style="display: flex; align-items: center;">
                                 <span class="entry-timestamp">${formattedDate}</span>
                                 <button class="delete-btn" onclick="deleteEntry(${entry.id})" title="Eintrag löschen">X</button>
@@ -449,6 +457,26 @@
             }).join('');
             
             entriesContainer.innerHTML = entriesHTML;
+        }
+
+        function formatAgeDetailed(days) {
+            const years = Math.floor(days / 365);
+            days %= 365;
+
+            const months = Math.floor(days / 30);
+            days %= 30;
+
+            const weeks = Math.floor(days / 7);
+            days %= 7;
+
+            const parts = [];
+
+            if (years) parts.push(`${years} Jahr${years !== 1 ? 'e' : ''}`);
+            if (months) parts.push(`${months} Monat${months !== 1 ? 'e' : ''}`);
+            if (weeks) parts.push(`${weeks} Woche${weeks !== 1 ? 'n' : ''}`);
+            if (days) parts.push(`${days} Tag${days !== 1 ? 'e' : ''}`);
+
+            return parts.slice(0, 2).join(' '); // limit to 2 units
         }
         
         // Delete entry function
