@@ -303,13 +303,7 @@
                 </div>
 
                 <input type="text" id="message" name="message" placeholder="Eintrag hier eingeben..." required>
-                
-                <div style="display: none; margin-top: 10px; margin-bottom: 15px;">
-                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                        <button type="button" class="preset-btn" onclick="setPresetMessage('Klauenschnitt')">Klauenschnitt</button>
-                        <button type="button" class="preset-btn" onclick="setPresetMessage('Umweidung auf ')">Umweidung auf</button>
-                    </div>
-                </div>
+             
             </div>
             
             
@@ -391,6 +385,7 @@
                     
                     // Set current filter
                     currentFilter = this.getAttribute('data-filter');
+                    document.getElementById('scope').value = currentFilter;
                     
                     // Apply filter to current entries
                     displayEntries(allEntries, currentFilter);
